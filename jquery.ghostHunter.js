@@ -61,7 +61,7 @@
 			    this.field('title', {boost: 10});
 			    this.field('description');
 			    this.field('link');
-			    this.field('category'),
+			    this.field('category');
 			    this.field('pubDate');
 			    this.ref('id');
 			});

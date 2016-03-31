@@ -60,10 +60,12 @@ If you'd like to customize the html of the results there are two options:
 
 You can have the search results appear "as you type". Simply pass the onKeyUp parameter as true
 
-	$("#search-field").ghostHunter({
-		results   		: "#results",
-		onKeyUp 		: true
-    });
+```js
+$("#search-field").ghostHunter({
+	results   		: "#results",
+	onKeyUp 		: true
+});
+```
 
 ###Adding callbacks
 
