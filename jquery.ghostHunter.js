@@ -26,10 +26,12 @@
 		results 			: false,
 		rss 				: "/rss",
 		onKeyUp 			: false,
-		result_template 	: "<a href='{{link}}'><p><h2>{{title}}</h2><h4>{{pubDate}}</h4></p></a>",
+		result_template 	: "<a href='{{link}}'><p><h2>{{title}}</h2>{{description}}</p><p><h4>{{pubDate}}</h4><h4>Tags: {{category}}</h4></p></a>",
 		info_template		: "<p>Number of posts found: {{amount}}</p>",
 		displaySearchInfo 	: true,
 		zeroResultsInfo		: true,
+		infoMaxLength		: 120,
+		categorySeparator	: "&nbsp;",
 		before 				: false,
 		onComplete 			: false
 	};
@@ -48,7 +50,9 @@
 			this.result_template 	= opts.result_template;
 			this.info_template 		= opts.info_template;
 			this.zeroResultsInfo 	= opts.zeroResultsInfo;
-			this.displaySearchInfo  = opts.displaySearchInfo;
+			this.displaySearchInfo	= opts.displaySearchInfo;
+			this.infoMaxLength		= opts.infoMaxLength;
+			this.categorySeparator	= opts.categorySeparator;
 			this.before 			= opts.before;
 			this.onComplete 		= opts.onComplete;
 
@@ -57,7 +61,7 @@
 			    this.field('title', {boost: 10});
 			    this.field('description');
 			    this.field('link');
-			    this.field('category');
+			    this.field('category'),
 			    this.field('pubDate');
 			    this.ref('id');
 			});
@@ -92,6 +96,8 @@
 			var index 		= this.index,
 				rssURL 		= this.rss,
 				blogData 	= this.blogData;
+				maxLength 	= this.infoMaxLength;
+				separator 	= this.categorySeparator;
 
 			$.get(rssURL,function( data ){
 
@@ -102,9 +108,9 @@
 			        var parsedData 	= {
 						id: i+1,
 						title 		: post.find('title').text(),
-						description	: post.find('description').text(),
-						category 	: post.find('category').text(),
-						pubDate 	: post.find('pubDate').text(),
+						description	: $(post.find('description').text()).text().substr(0, maxLength),
+						category 	: post.find("category").toArray().map(function(v) { return v.textContent }).join(separator),
+						pubDate 	: new Date(post.find('pubDate').text()).toLocaleDateString(),
 						link 		: post.find('link').text()
 					};
 

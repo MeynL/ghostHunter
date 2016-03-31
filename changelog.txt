@@ -1,3 +1,4 @@
+v0.2.4  : Added infoMaxLength and categorySeparator
 v0.2.3	: Added callbacks
 	  Added tags/categories to the indexed data
 v0.2.2	: Added the "clear" method
