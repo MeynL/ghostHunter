@@ -13,7 +13,23 @@ Although GhostHunter is designed specifically for the Ghost blogging platform, i
 
 If you find it useful, I'd love to hear how you used it, what challenges there were and how I could make it better: jamal@i11u.me
 
-Add little features such as max length of description and category separator by @dreampiggy
+##Modified Feature
+
+Add some features:
+
+1. Chinese support
+2. Max length of description
+3. Custom category separator
+4. Global search(all posts content instead of just description), this may effect browser efficiency
+
+by @dreampiggy
+
+##Build
+
+```bash
+uglifyjs lunr.js > lunr.min.js
+browserify jquery.ghostHunter.js | uglifyjs > jquery.ghostHunter.min.js
+```
 
 ##Usage
 
@@ -139,6 +155,18 @@ If you want to limit the length of your post description from the search result,
 $('#search-field').ghostHunter({
     results: '#search_results',
     infoMaxLength: 120,
+    categorySeparator: "&nbsp;"
+});
+```
+
+###Set global search
+
+Global search will search all characters in each post, this may be a heavy job for client browser if you have so many posts. Disable will just use the description of each post.So you can control whether to use. Default is **ON**
+
+```js
+$('#search-field').ghostHunter({
+    results: '#search_results',
+    globalSearch: true,
     categorySeparator: "&nbsp;"
 });
 ```
